@@ -13,7 +13,6 @@ class Database {
 
     @Inject
     public Database() {
-        System.out.println("Creating a new " + this);
     }
 
     Account getAccount(String username) {

@@ -13,8 +13,8 @@ final class HelloWorldCommand implements Command {
     }
 
     @Override
-    public Status handleInput(List<String> input) {
+    public Result handleInput(List<String> input) {
         outputter.output("world!");
-        return Status.HANDLED;
+        return Result.handled();
     }
 }

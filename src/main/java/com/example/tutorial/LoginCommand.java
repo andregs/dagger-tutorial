@@ -6,22 +6,23 @@ import javax.inject.Inject;
 import java.util.List;
 
 final class LoginCommand extends SingleArgCommand {
-
     private final Database database;
     private final Outputter outputter;
+    private final UserCommandsRouter.Factory userCommandsRouterFactory;
 
     @Inject
-    LoginCommand(Database database, Outputter outputter) {
+    LoginCommand(Database database, Outputter outputter, UserCommandsRouter.Factory userCommandsRouterFactory) {
         this.database = database;
         this.outputter = outputter;
-        System.out.println("Creating a new " + this);
+        this.userCommandsRouterFactory = userCommandsRouterFactory;
     }
 
     @Override
-    protected Status handleArg(String username) {
+    protected Result handleArg(String username) {
         Account account = database.getAccount(username);
         outputter.output(username + " is logged in with balance: " + account.balance());
-        return Status.HANDLED;
+        return Result.enterNestedCommandSet(
+                userCommandsRouterFactory.create(account).router());
     }
 
 }
@@ -30,9 +31,9 @@ final class LoginCommand extends SingleArgCommand {
 abstract class SingleArgCommand implements Command {
 
     @Override
-    public final Status handleInput(List<String> input) {
-        return input.size() == 1 ? handleArg(input.get(0)) : Status.INVALID;
+    public final Result handleInput(List<String> input) {
+        return input.size() == 1 ? handleArg(input.get(0)) : Result.invalid();
     }
 
-    protected abstract Status handleArg(String arg);
+    protected abstract Result handleArg(String arg);
 }

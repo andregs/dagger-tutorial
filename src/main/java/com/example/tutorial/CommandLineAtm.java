@@ -2,18 +2,16 @@ package com.example.tutorial;
 
 import java.util.Scanner;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 public class CommandLineAtm {
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-
-        // this factory is auto-generated
-        CommandRouterFactory commandRouterFactory = DaggerCommandRouterFactory.create();
-
-        CommandRouter commandRouter = commandRouterFactory.router();
+        CommandProcessor commandProcessor = CommandProcessorFactory.create().commandProcessor();
+        Scanner scanner = new Scanner(System.in, UTF_8.name());
 
         while (scanner.hasNextLine()) {
-            commandRouter.route(scanner.nextLine());
+            commandProcessor.process(scanner.nextLine());
         }
     }
 

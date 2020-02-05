@@ -1,20 +1,27 @@
 package com.example.tutorial;
 
+import com.example.tutorial.Command.Result;
+import com.example.tutorial.Command.Status;
+
 import javax.inject.Inject;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 final class CommandRouter {
 
     private final Map<String, Command> commands;
+    private final Outputter outputter;
 
     @Inject
-    public CommandRouter(Map<String, Command> commands) {
+    public CommandRouter(Map<String, Command> commands, Outputter outputter) {
         // "hello" -> HelloWorldCommand
         // "login" -> LoginCommand
         this.commands = commands;
+        this.outputter = outputter;
     }
 
-    Command.Status route(String input) {
+    Result route(String input) {
         List<String> splitInput = split(input);
         if (splitInput.isEmpty()) {
             return invalidCommand(input);
@@ -26,18 +33,14 @@ final class CommandRouter {
             return invalidCommand(input);
         }
 
-        Command.Status status = command.handleInput(splitInput.subList(1, splitInput.size()));
-        if (status == Command.Status.INVALID) {
-            System.out.println(commandKey + ": invalid arguments");
-        }
-        return status;
+        List<String> args = splitInput.subList(1, splitInput.size());
+        Result result = command.handleInput(args);
+        return result.status().equals(Status.INVALID) ? invalidCommand(input) : result;
     }
 
-    private Command.Status invalidCommand(String input) {
-        System.out.println(
-                String.format("Couldn't understand \"%s\". Please try again.", input)
-        );
-        return Command.Status.INVALID;
+    private Result invalidCommand(String input) {
+        outputter.output(String.format("Couldn't understand \"%s\". Please try again.", input));
+        return Result.invalid();
     }
 
     private static List<String> split(String string) {
