@@ -5,7 +5,10 @@ import dagger.BindsInstance;
 import dagger.Module;
 import dagger.Subcomponent;
 
-@Subcomponent(modules = UserCommandsModule.class)
+@Subcomponent(modules = {
+        UserCommandsModule.class,
+        AmountsModule.class,
+})
 interface UserCommandsRouter {
     CommandRouter router();
 
