@@ -1,7 +1,29 @@
 package com.example.tutorial;
 
+import com.example.tutorial.Database.Account;
+
 import javax.inject.Inject;
 import java.util.List;
+
+final class LoginCommand extends SingleArgCommand {
+
+    private final Database database;
+    private final Outputter outputter;
+
+    @Inject
+    LoginCommand(Database database, Outputter outputter) {
+        this.database = database;
+        this.outputter = outputter;
+    }
+
+    @Override
+    protected Status handleArg(String username) {
+        Account account = database.getAccount(username);
+        outputter.output(username + " is logged in with balance: " + account.balance());
+        return Status.HANDLED;
+    }
+
+}
 
 /** Abstract command that accepts a single argument */
 abstract class SingleArgCommand implements Command {
@@ -12,21 +34,4 @@ abstract class SingleArgCommand implements Command {
     }
 
     protected abstract Status handleArg(String arg);
-}
-
-final class LoginCommand extends SingleArgCommand {
-
-    private final Outputter outputter;
-
-    @Inject
-    LoginCommand(Outputter outputter) {
-        this.outputter = outputter;
-    }
-
-    @Override
-    protected Status handleArg(String username) {
-        outputter.output(username + " is logged in.");
-        return Status.HANDLED;
-    }
-
 }
