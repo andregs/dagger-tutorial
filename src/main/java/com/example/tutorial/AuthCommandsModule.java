@@ -1,21 +1,26 @@
 package com.example.tutorial;
 
+import com.example.tutorial.Database.Account;
 import dagger.Binds;
+import dagger.BindsOptionalOf;
 import dagger.Module;
 import dagger.multibindings.IntoMap;
 import dagger.multibindings.StringKey;
 
 @Module
-abstract class AuthCommandsModule {
+interface AuthCommandsModule {
 
     @Binds
     @IntoMap
     @StringKey("login")
-    abstract Command loginCommand(LoginCommand command);
+    Command loginCommand(LoginCommand command);
 
     @Binds
     @IntoMap
     @StringKey("logout")
-    abstract Command logoutCommand(LogoutCommand command);
+    Command logoutCommand(LogoutCommand command);
+
+    @BindsOptionalOf
+    Account optionalAccount();
 
 }
