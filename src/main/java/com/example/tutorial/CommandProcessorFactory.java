@@ -11,7 +11,7 @@ import javax.inject.Singleton;
 @Component(
         modules = {
                 HelloWorldModule.class,
-                LoginCommandModule.class,
+                AuthCommandsModule.class,
                 UserCommandsRouter.InstallationModule.class, // CommandProcessorFactory @Component is parent of UserCommandsRouter @Subcomponent
                 SystemOutModule.class,
         })

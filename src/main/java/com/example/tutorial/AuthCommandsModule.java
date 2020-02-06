@@ -6,11 +6,16 @@ import dagger.multibindings.IntoMap;
 import dagger.multibindings.StringKey;
 
 @Module
-abstract class LoginCommandModule {
+abstract class AuthCommandsModule {
 
     @Binds
     @IntoMap
     @StringKey("login")
     abstract Command loginCommand(LoginCommand command);
+
+    @Binds
+    @IntoMap
+    @StringKey("logout")
+    abstract Command logoutCommand(LogoutCommand command);
 
 }
