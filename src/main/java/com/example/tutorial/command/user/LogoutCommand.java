@@ -1,4 +1,7 @@
-package com.example.tutorial;
+package com.example.tutorial.command.user;
+
+import com.example.tutorial.command.Command;
+import com.example.tutorial.shared.Outputter;
 
 import javax.inject.Inject;
 import java.util.List;

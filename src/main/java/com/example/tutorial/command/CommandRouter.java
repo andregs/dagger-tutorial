@@ -1,14 +1,15 @@
-package com.example.tutorial;
+package com.example.tutorial.command;
 
-import com.example.tutorial.Command.Result;
-import com.example.tutorial.Command.Status;
+import com.example.tutorial.command.Command.Result;
+import com.example.tutorial.command.Command.Status;
+import com.example.tutorial.shared.Outputter;
 
 import javax.inject.Inject;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-final class CommandRouter {
+public final class CommandRouter {
 
     private final Map<String, Command> commands;
     private final Outputter outputter;

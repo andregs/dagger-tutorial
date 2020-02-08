@@ -1,7 +1,7 @@
-package com.example.tutorial;
+package com.example.tutorial.command;
 
-import com.example.tutorial.Command.Result;
-import com.example.tutorial.Command.Status;
+import com.example.tutorial.command.Command.Result;
+import com.example.tutorial.command.Command.Status;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -9,7 +9,7 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 @Singleton
-final class CommandProcessor {
+public final class CommandProcessor {
     private final Deque<CommandRouter> commandRouterStack = new ArrayDeque<>();
 
     @Inject
@@ -17,7 +17,7 @@ final class CommandProcessor {
         commandRouterStack.push(firstCommandRouter);
     }
 
-    Status process(String input) {
+    public Status process(String input) {
         Result result = commandRouterStack.peek().route(input);
         if (result.status().equals(Status.INPUT_COMPLETED)) {
             commandRouterStack.pop();

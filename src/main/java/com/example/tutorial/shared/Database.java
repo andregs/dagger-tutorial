@@ -1,4 +1,4 @@
-package com.example.tutorial;
+package com.example.tutorial.shared;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Singleton // Dagger will create only one instance of Database per instance of our @Component
-class Database {
+public class Database {
 
     private final Map<String, Account> accounts = new HashMap<>();
 
@@ -15,11 +15,11 @@ class Database {
     public Database() {
     }
 
-    Account getAccount(String username) {
+    public Account getAccount(String username) {
         return accounts.computeIfAbsent(username, Account::new);
     }
 
-    static final class Account {
+    public static final class Account {
         private final String username;
         private BigDecimal balance = BigDecimal.ZERO;
 

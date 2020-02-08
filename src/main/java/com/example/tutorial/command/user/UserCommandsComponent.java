@@ -1,6 +1,7 @@
-package com.example.tutorial;
+package com.example.tutorial.command.user;
 
-import com.example.tutorial.Database.Account;
+import com.example.tutorial.command.CommandRouter;
+import com.example.tutorial.shared.Database.Account;
 import dagger.BindsInstance;
 import dagger.Module;
 import dagger.Subcomponent;
@@ -10,15 +11,15 @@ import dagger.Subcomponent;
         UserCommandsModule.class,
         AmountsModule.class,
 })
-interface UserCommandsRouter {
+public interface UserCommandsComponent {
     CommandRouter router();
 
     @Subcomponent.Factory
     interface Factory {
-        UserCommandsRouter create(@BindsInstance Account account);
+        UserCommandsComponent create(@BindsInstance Account account);
     }
 
-    @Module(subcomponents = UserCommandsRouter.class)
+    @Module(subcomponents = UserCommandsComponent.class)
     interface InstallationModule {
     }
 

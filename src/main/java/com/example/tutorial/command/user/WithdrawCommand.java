@@ -1,6 +1,7 @@
-package com.example.tutorial;
+package com.example.tutorial.command.user;
 
-import com.example.tutorial.Database.Account;
+import com.example.tutorial.shared.Database.Account;
+import com.example.tutorial.shared.Outputter;
 
 import javax.inject.Inject;
 import java.math.BigDecimal;

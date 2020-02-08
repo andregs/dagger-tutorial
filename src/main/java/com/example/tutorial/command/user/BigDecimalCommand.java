@@ -1,4 +1,7 @@
-package com.example.tutorial;
+package com.example.tutorial.command.user;
+
+import com.example.tutorial.command.SingleArgCommand;
+import com.example.tutorial.shared.Outputter;
 
 import java.math.BigDecimal;
 

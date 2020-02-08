@@ -1,21 +1,23 @@
-package com.example.tutorial;
+package com.example.tutorial.command;
 
-import com.example.tutorial.Database.Account;
+import com.example.tutorial.command.user.UserCommandsComponent;
+import com.example.tutorial.shared.Database;
+import com.example.tutorial.shared.Database.Account;
+import com.example.tutorial.shared.Outputter;
 
 import javax.inject.Inject;
-import java.util.List;
 import java.util.Optional;
 
-final class LoginCommand extends SingleArgCommand {
+public final class LoginCommand extends SingleArgCommand {
     private final Database database;
     private final Outputter outputter;
-    private final UserCommandsRouter.Factory userCommandsRouterFactory;
+    private final UserCommandsComponent.Factory userCommandsRouterFactory;
     private final Optional<Account> account;
 
     @Inject
     LoginCommand(Database database,
                  Outputter outputter,
-                 UserCommandsRouter.Factory userCommandsRouterFactory,
+                 UserCommandsComponent.Factory userCommandsRouterFactory,
                  Optional<Account> account) {
         this.database = database;
         this.outputter = outputter;
@@ -26,12 +28,12 @@ final class LoginCommand extends SingleArgCommand {
     @Override
     protected Result handleArg(String username) {
         if (account.isPresent()) {
-            // when in UserCommandsRouter @Subcomponent this optional will be present
+            // when in UserCommandsComponent @Subcomponent this optional will be present
             outputter.output("ignored - already logged in.");
             return Result.handled();
         }
 
-        // when in CommandProcessorFactory @Component the Optional will be absent
+        // when in CommandProcessorComponent @Component the Optional will be absent
         Account account = database.getAccount(username);
         outputter.output(username + " is logged in with balance: " + account.balance());
         return Result.enterNestedCommandSet(
@@ -40,13 +42,3 @@ final class LoginCommand extends SingleArgCommand {
 
 }
 
-/** Abstract command that accepts a single argument */
-abstract class SingleArgCommand implements Command {
-
-    @Override
-    public final Result handleInput(List<String> input) {
-        return input.size() == 1 ? handleArg(input.get(0)) : Result.invalid();
-    }
-
-    protected abstract Result handleArg(String arg);
-}

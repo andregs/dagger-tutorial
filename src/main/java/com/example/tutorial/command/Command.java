@@ -1,10 +1,10 @@
-package com.example.tutorial;
+package com.example.tutorial.command;
 
 import java.util.List;
 import java.util.Optional;
 
 /** Logic to process some user input. */
-interface Command {
+public interface Command {
 
     /** Process the rest of the command's words and do something. */
     Result handleInput(List<String> input);
@@ -18,19 +18,19 @@ interface Command {
             this.nestedCommandRouter = nestedCommandRouter;
         }
 
-        static Result invalid() {
+        public static Result invalid() {
             return new Result(Status.INVALID, Optional.empty());
         }
 
-        static Result handled() {
+        public static Result handled() {
             return new Result(Status.HANDLED, Optional.empty());
         }
 
-        static Result inputCompleted() {
+        public static Result inputCompleted() {
             return new Result(Status.INPUT_COMPLETED, Optional.empty());
         }
 
-        static Result enterNestedCommandSet(CommandRouter nestedCommandRouter) {
+        public static Result enterNestedCommandSet(CommandRouter nestedCommandRouter) {
             return new Result(Status.HANDLED, Optional.of(nestedCommandRouter));
         }
 

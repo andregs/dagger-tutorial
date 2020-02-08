@@ -1,10 +1,10 @@
-package com.example.tutorial;
+package com.example.tutorial.shared;
 
 import dagger.Module;
 import dagger.Provides;
 
 @Module
-abstract class SystemOutModule {
+public abstract class SystemOutModule {
 
     @Provides
     static Outputter textOutputter() {

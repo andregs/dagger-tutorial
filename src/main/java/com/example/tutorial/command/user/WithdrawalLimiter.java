@@ -1,4 +1,4 @@
-package com.example.tutorial;
+package com.example.tutorial.command.user;
 
 import javax.inject.Inject;
 import java.math.BigDecimal;
